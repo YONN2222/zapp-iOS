@@ -86,8 +86,18 @@ final class PersistenceManager {
     }
     
     func savePlaybackPosition(show: MediathekShow, position: TimeInterval, duration: TimeInterval) {
+        if duration > 0 {
+            let nearEndThreshold = max(1.0, duration * 0.01)
+            if position >= duration - nearEndThreshold || position >= duration * 0.99 {
+                removeContinueWatchingEntry(apiId: show.id)
+                updateBookmarksPlayback(show: show, position: duration, duration: duration)
+                updateDownloadsPlayback(show: show, position: duration, duration: duration)
+                return
+            }
+        }
+
         var continueWatching = loadContinueWatching()
-        
+
         if let index = continueWatching.firstIndex(where: { $0.apiId == show.id }) {
             continueWatching[index].playbackPosition = position
             continueWatching[index].videoDuration = duration
@@ -106,12 +116,12 @@ final class PersistenceManager {
             persisted.lastPlayedBackAt = Date()
             continueWatching.append(persisted)
         }
-        
+
         // Keep only last 50
         if continueWatching.count > 50 {
             continueWatching = Array(continueWatching.suffix(50))
         }
-        
+
         saveContinueWatching(continueWatching)
         notifyContinueWatchingChanged()
         updateBookmarksPlayback(show: show, position: position, duration: duration)
