@@ -8,6 +8,7 @@ struct SettingsView: View {
 
     @State private var showingCacheClearedAlert = false
     @State private var showingDownloadsClearedAlert = false
+    @State private var showingContinueClearedAlert = false
     @State private var showingHistoryClearedAlert = false
     @State private var pendingDestructiveAction: DestructiveAction?
     @State private var appVersionValue = SettingsView.readAppVersion()
@@ -54,6 +55,11 @@ struct SettingsView: View {
             Button(String(localized: "ok"), role: .cancel) {}
         } message: {
             Text("settings_downloads_cleared_message")
+        }
+        .alert(String(localized: "settings_continue_cleared_title"), isPresented: $showingContinueClearedAlert) {
+            Button(String(localized: "ok"), role: .cancel) {}
+        } message: {
+            Text("settings_continue_cleared_message")
         }
         .alert(String(localized: "settings_history_cleared_title"), isPresented: $showingHistoryClearedAlert) {
             Button(String(localized: "ok"), role: .cancel) {}
@@ -139,8 +145,18 @@ struct SettingsView: View {
                     description: String(localized: "settings_history_reset_description")
                 )
             }
+
+            Button(role: .destructive) {
+                pendingDestructiveAction = .clearContinueWatching
+            } label: {
+                SettingsRowLabel(
+                    title: String(localized: "settings_clear_continue_title"),
+                    description: String(localized: "settings_clear_continue_description")
+                )
+            }
         }
     }
+
 
     private var mediathekSection: some View {
         Section(String(localized: "settings_mediathek_section")) {
@@ -225,6 +241,8 @@ struct SettingsView: View {
         switch action {
         case .deleteDownloads:
             deleteAllDownloads()
+        case .clearContinueWatching:
+            deleteAllContinueWatching()
         case .clearCache:
             clearThumbnailCache()
         case .clearSearchHistory:
@@ -254,6 +272,13 @@ struct SettingsView: View {
     private func clearSearchHistory() {
         SearchHistoryStore.shared.clear()
         showingHistoryClearedAlert = true
+    }
+
+    private func deleteAllContinueWatching() {
+        Task { @MainActor in
+            repo.deleteAllContinueWatching()
+            showingContinueClearedAlert = true
+        }
     }
 
     private var liveTvSection: some View {
@@ -312,6 +337,7 @@ struct SettingsView: View {
 private enum DestructiveAction: Identifiable, Equatable {
     case deleteDownloads(count: Int)
     case clearCache
+    case clearContinueWatching
     case clearSearchHistory
     case resetChannelOrder
 
@@ -321,6 +347,8 @@ private enum DestructiveAction: Identifiable, Equatable {
             return "deleteDownloads_\(count)"
         case .clearCache:
             return "clearCache"
+        case .clearContinueWatching:
+            return "clearContinueWatching"
         case .clearSearchHistory:
             return "clearSearchHistory"
         case .resetChannelOrder:
@@ -334,6 +362,8 @@ private enum DestructiveAction: Identifiable, Equatable {
             return String(localized: "settings_delete_downloads_title")
         case .clearCache:
             return String(localized: "settings_clear_cache_title")
+        case .clearContinueWatching:
+            return String(localized: "settings_clear_continue_title")
         case .clearSearchHistory:
             return String(localized: "settings_history_reset_title")
         case .resetChannelOrder:
@@ -356,6 +386,8 @@ private enum DestructiveAction: Identifiable, Equatable {
             )
         case .clearCache:
             return String(localized: "settings_clear_cache_confirmation")
+        case .clearContinueWatching:
+            return String(localized: "settings_clear_continue_confirmation")
         case .clearSearchHistory:
             return String(localized: "settings_history_reset_confirmation")
         case .resetChannelOrder:
@@ -369,6 +401,8 @@ private enum DestructiveAction: Identifiable, Equatable {
             return String(localized: "settings_delete_downloads_confirm" )
         case .clearCache:
             return String(localized: "settings_clear_cache_confirm" )
+        case .clearContinueWatching:
+            return String(localized: "settings_clear_continue_confirm" )
         case .clearSearchHistory:
             return String(localized: "settings_history_reset_confirm" )
         case .resetChannelOrder:

@@ -119,6 +119,11 @@ final class PersistenceManager {
         saveContinueWatching(continueWatching)
         notifyContinueWatchingChanged()
     }
+
+    func deleteAllContinueWatching() {
+        saveContinueWatching([])
+        notifyContinueWatchingChanged()
+    }
     
     private func saveContinueWatching(_ continueWatching: [PersistedMediathekShow]) {
         if let data = try? JSONEncoder().encode(continueWatching) {

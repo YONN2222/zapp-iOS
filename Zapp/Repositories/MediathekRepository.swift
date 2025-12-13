@@ -84,6 +84,11 @@ final class MediathekRepository: ObservableObject {
         persistence.removeContinueWatchingEntry(apiId: apiId)
         loadPersistedData()
     }
+
+    func deleteAllContinueWatching() {
+        persistence.deleteAllContinueWatching()
+        loadPersistedData()
+    }
     
     func getPlaybackPosition(apiId: String) -> TimeInterval? {
         if let entry = continueWatching.first(where: { $0.apiId == apiId }), entry.playbackPosition > 0 {

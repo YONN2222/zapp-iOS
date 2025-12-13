@@ -201,6 +201,13 @@
 "settings_downloads_cleared_message" = "All saved shows were removed from this device.";
 "settings_history_cleared_title" = "Search History Removed";
 "settings_history_cleared_message" = "Your recent search queries were deleted.";
+"settings_clear_continue_title" = "Clear Continue Watching";
+"settings_clear_continue_description" = "Remove all entries from your Continue Watching list.";
+"settings_clear_continue_confirmation" = "This will remove all 'Continue Watching' entries. This cannot be undone.";
+"settings_clear_continue_confirm" = "Clear Continue Watching";
+
+"settings_continue_cleared_title" = "Continue Watching Cleared";
+"settings_continue_cleared_message" = "All Continue Watching entries were removed.";
 
 // Common
 "app_name" = "Zapp";

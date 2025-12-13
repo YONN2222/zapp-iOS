@@ -201,6 +201,12 @@
 "settings_downloads_cleared_message" = "Alle gespeicherten Sendungen wurden vom Gerät gelöscht.";
 "settings_history_cleared_title" = "Suchverlauf entfernt";
 "settings_history_cleared_message" = "Deine letzten Suchanfragen wurden komplett zurückgesetzt.";
+"settings_clear_continue_title" = "Weiterschauen löschen";
+"settings_clear_continue_description" = "Alle Einträge aus deiner Weiterschauen-Liste entfernen.";
+"settings_clear_continue_confirmation" = "Dadurch werden alle Weiterschauen-Einträge entfernt. Dies kann nicht rückgängig gemacht werden.";
+"settings_clear_continue_confirm" = "Weiterschauen löschen";
+"settings_continue_cleared_title" = "Weiterschauen gelöscht";
+"settings_continue_cleared_message" = "Alle Einträge in Weiterschauen wurden entfernt.";
 
 // Common
 "app_name" = "Zapp";
