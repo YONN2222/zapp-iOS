@@ -1,6 +1,6 @@
 # Zapp für iOS
 
-![ZAPP](.github/media/featureGraphic.jpg)
+![ZAPP](.github/images/featureGraphic.jpg)
 
 ### Zapp für iOS bringt das Android-Erlebnis auf iPhone und iPad. Die erste Version ist fertig und bietet schnellen Zugriff auf viele öffentlich-rechtliche Sender und Mediatheken.
 
