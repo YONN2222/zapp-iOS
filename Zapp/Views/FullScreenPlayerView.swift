@@ -536,7 +536,7 @@ class CustomPlayerViewController: UIViewController, UIGestureRecognizerDelegate,
         contentStack.addArrangedSubview(scrubStack)
 
         let compactSymbolConfig = UIImage.SymbolConfiguration(pointSize: 34, weight: .medium, scale: .medium)
-        skipBackwardButton.setImage(UIImage(systemName: "gobackward.15"), for: .normal)
+        skipBackwardButton.setImage(UIImage(systemName: "gobackward.5"), for: .normal)
         skipBackwardButton.setPreferredSymbolConfiguration(compactSymbolConfig, forImageIn: .normal)
         skipBackwardButton.tintColor = .white
         skipBackwardButton.addTarget(self, action: #selector(skipBackwardTapped), for: .touchUpInside)
@@ -687,7 +687,7 @@ class CustomPlayerViewController: UIViewController, UIGestureRecognizerDelegate,
 
     @objc private func skipBackwardTapped() {
         animateSkip(button: skipBackwardButton, clockwise: false)
-        performSkip(by: -15)
+        performSkip(by: -5)
     }
 
     @objc private func skipForwardTapped() {

@@ -3,3 +3,4 @@ Zapp.xcodeproj/project.xcworkspace/xcuserdata/yann.xcuserdatad/UserInterfaceStat
 /build/
 /android/
 .github/c*
+.DS_Store
