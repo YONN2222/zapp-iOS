@@ -11,6 +11,7 @@ struct MediathekView: View {
     @State private var connectionTimeoutTask: Task<Void, Never>?
     @State private var hasConnectionTimedOut = false
     @State private var sheetShow: MediathekShow?
+    @FocusState private var inlineSearchFocused: Bool
 
     @ViewBuilder
     var body: some View {
@@ -264,10 +265,18 @@ struct MediathekView: View {
     }
 
     private var shouldShowInlineSuggestions: Bool {
-        usesInlineSearch
-            && !isOfflineModeActive
-            && trimmedSearchInput != committedQueryText
-            && (!viewModel.searchHistory.isEmpty || !trimmedSearchInput.isEmpty)
+        guard usesInlineSearch, !isOfflineModeActive else { return false }
+
+        if trimmedSearchInput != committedQueryText,
+           (!viewModel.searchHistory.isEmpty || !trimmedSearchInput.isEmpty) {
+            return true
+        }
+
+        if inlineSearchFocused && !viewModel.searchHistory.isEmpty {
+            return true
+        }
+
+        return false
     }
 
     private var usesInlineSearch: Bool {
@@ -286,6 +295,7 @@ struct MediathekView: View {
                         .foregroundColor(.secondary)
 
                     TextField("", text: searchBinding, prompt: searchPrompt)
+                        .focused($inlineSearchFocused)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         .submitLabel(.search)
@@ -295,6 +305,7 @@ struct MediathekView: View {
                                 resetConnectionTimeoutState()
                             }
                             viewModel.submitSearch()
+                            inlineSearchFocused = false
                             dismissKeyboard()
                         }
 
@@ -323,12 +334,13 @@ struct MediathekView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             } else if shouldShowInlineSuggestions {
-                InlineSearchSuggestionList(
+                    InlineSearchSuggestionList(
                     searchText: viewModel.searchText,
                     history: viewModel.searchHistory,
                     onSuggestionTapped: viewModel.selectHistoryEntry,
                     onSubmit: viewModel.submitSearch,
-                    onDeleteHistoryEntry: viewModel.deleteHistoryEntry
+                        onDeleteHistoryEntry: viewModel.deleteHistoryEntry,
+                        onSuggestionHandled: { inlineSearchFocused = false }
                 )
                 .transition(.opacity.combined(with: .move(edge: .top)))
             }
@@ -403,6 +415,7 @@ struct MediathekView: View {
         let onSuggestionTapped: (String) -> Void
         let onSubmit: () -> Void
         let onDeleteHistoryEntry: (String) -> Void
+        let onSuggestionHandled: () -> Void
 
         private var trimmedSearchText: String {
             searchText.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -428,7 +441,10 @@ struct MediathekView: View {
                                 trimmedSearchText
                             ),
                             icon: "magnifyingglass",
-                            action: onSubmit,
+                            action: {
+                                onSubmit()
+                                onSuggestionHandled()
+                            },
                             deleteAction: nil
                         )
                     }
@@ -437,7 +453,10 @@ struct MediathekView: View {
                         InlineSuggestionRow(
                             title: lastQuery,
                             icon: "clock.arrow.circlepath",
-                            action: { onSuggestionTapped(lastQuery) },
+                            action: {
+                                onSuggestionTapped(lastQuery)
+                                onSuggestionHandled()
+                            },
                             deleteAction: { onDeleteHistoryEntry(lastQuery) }
                         )
                     }
@@ -455,7 +474,10 @@ struct MediathekView: View {
                             InlineSuggestionRow(
                                 title: entry,
                                 icon: "text.magnifyingglass",
-                                action: { onSuggestionTapped(entry) },
+                                action: {
+                                    onSuggestionTapped(entry)
+                                    onSuggestionHandled()
+                                },
                                 deleteAction: { onDeleteHistoryEntry(entry) }
                             )
                         }
