@@ -207,6 +207,12 @@
 "settings_clear_continue_confirm" = "Weiterschauen löschen";
 "settings_continue_cleared_title" = "Weiterschauen gelöscht";
 "settings_continue_cleared_message" = "Alle Einträge in Weiterschauen wurden entfernt.";
+"settings_clear_bookmarks_title" = "Lesezeichen löschen";
+"settings_clear_bookmarks_description" = "Alle gespeicherten Lesezeichen von diesem Gerät entfernen.";
+"settings_clear_bookmarks_confirmation" = "Dadurch werden alle deine Lesezeichen entfernt. Dies kann nicht rückgängig gemacht werden.";
+"settings_clear_bookmarks_confirm" = "Lesezeichen löschen";
+"settings_bookmarks_cleared_title" = "Lesezeichen gelöscht";
+"settings_bookmarks_cleared_message" = "Alle Lesezeichen wurden entfernt.";
 
 // Common
 "app_name" = "Zapp";

@@ -9,6 +9,7 @@ struct SettingsView: View {
     @State private var showingCacheClearedAlert = false
     @State private var showingDownloadsClearedAlert = false
     @State private var showingContinueClearedAlert = false
+    @State private var showingBookmarksClearedAlert = false
     @State private var showingHistoryClearedAlert = false
     @State private var pendingDestructiveAction: DestructiveAction?
     @State private var appVersionValue = SettingsView.readAppVersion()
@@ -65,6 +66,11 @@ struct SettingsView: View {
             Button(String(localized: "ok"), role: .cancel) {}
         } message: {
             Text("settings_history_cleared_message")
+        }
+        .alert(String(localized: "settings_bookmarks_cleared_title"), isPresented: $showingBookmarksClearedAlert) {
+            Button(String(localized: "ok"), role: .cancel) {}
+        } message: {
+            Text("settings_bookmarks_cleared_message")
         }
         .optionalPreferredColorScheme(settings.preferredColorScheme)
         .onAppear {
@@ -143,6 +149,15 @@ struct SettingsView: View {
                 SettingsRowLabel(
                     title: String(localized: "settings_history_reset_title"),
                     description: String(localized: "settings_history_reset_description")
+                )
+            }
+
+            Button(role: .destructive) {
+                pendingDestructiveAction = .clearBookmarks
+            } label: {
+                SettingsRowLabel(
+                    title: String(localized: "settings_clear_bookmarks_title"),
+                    description: String(localized: "settings_clear_bookmarks_description")
                 )
             }
 
@@ -241,6 +256,8 @@ struct SettingsView: View {
         switch action {
         case .deleteDownloads:
             deleteAllDownloads()
+        case .clearBookmarks:
+            deleteAllBookmarks()
         case .clearContinueWatching:
             deleteAllContinueWatching()
         case .clearCache:
@@ -272,6 +289,13 @@ struct SettingsView: View {
     private func clearSearchHistory() {
         SearchHistoryStore.shared.clear()
         showingHistoryClearedAlert = true
+    }
+
+    private func deleteAllBookmarks() {
+        Task { @MainActor in
+            repo.deleteAllBookmarks()
+            showingBookmarksClearedAlert = true
+        }
     }
 
     private func deleteAllContinueWatching() {
@@ -337,6 +361,7 @@ struct SettingsView: View {
 private enum DestructiveAction: Identifiable, Equatable {
     case deleteDownloads(count: Int)
     case clearCache
+    case clearBookmarks
     case clearContinueWatching
     case clearSearchHistory
     case resetChannelOrder
@@ -347,6 +372,8 @@ private enum DestructiveAction: Identifiable, Equatable {
             return "deleteDownloads_\(count)"
         case .clearCache:
             return "clearCache"
+        case .clearBookmarks:
+            return "clearBookmarks"
         case .clearContinueWatching:
             return "clearContinueWatching"
         case .clearSearchHistory:
@@ -362,6 +389,8 @@ private enum DestructiveAction: Identifiable, Equatable {
             return String(localized: "settings_delete_downloads_title")
         case .clearCache:
             return String(localized: "settings_clear_cache_title")
+        case .clearBookmarks:
+            return String(localized: "settings_clear_bookmarks_title")
         case .clearContinueWatching:
             return String(localized: "settings_clear_continue_title")
         case .clearSearchHistory:
@@ -386,6 +415,8 @@ private enum DestructiveAction: Identifiable, Equatable {
             )
         case .clearCache:
             return String(localized: "settings_clear_cache_confirmation")
+        case .clearBookmarks:
+            return String(localized: "settings_clear_bookmarks_confirmation")
         case .clearContinueWatching:
             return String(localized: "settings_clear_continue_confirmation")
         case .clearSearchHistory:
@@ -401,6 +432,8 @@ private enum DestructiveAction: Identifiable, Equatable {
             return String(localized: "settings_delete_downloads_confirm" )
         case .clearCache:
             return String(localized: "settings_clear_cache_confirm" )
+        case .clearBookmarks:
+            return String(localized: "settings_clear_bookmarks_confirm" )
         case .clearContinueWatching:
             return String(localized: "settings_clear_continue_confirm" )
         case .clearSearchHistory:

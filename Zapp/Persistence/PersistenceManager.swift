@@ -6,6 +6,7 @@ import OSLog
 extension Notification.Name {
     static let downloadsUpdated = Notification.Name("PersistenceManager.downloadsUpdated")
     static let continueWatchingUpdated = Notification.Name("PersistenceManager.continueWatchingUpdated")
+    static let bookmarksUpdated = Notification.Name("PersistenceManager.bookmarksUpdated")
     static let navigateToDownloadsTab = Notification.Name("MainTab.navigateToDownloads")
 }
 
@@ -65,6 +66,11 @@ final class PersistenceManager {
         guard let index = bookmarks.firstIndex(where: { $0.apiId == apiId }) else { return }
         bookmarks.remove(at: index)
         saveBookmarks(bookmarks)
+    }
+
+    func deleteAllBookmarks() {
+        saveBookmarks([])
+        NotificationCenter.default.post(name: .bookmarksUpdated, object: nil)
     }
     
     private func saveBookmarks(_ bookmarks: [PersistedMediathekShow]) {

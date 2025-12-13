@@ -205,9 +205,14 @@
 "settings_clear_continue_description" = "Remove all entries from your Continue Watching list.";
 "settings_clear_continue_confirmation" = "This will remove all 'Continue Watching' entries. This cannot be undone.";
 "settings_clear_continue_confirm" = "Clear Continue Watching";
-
 "settings_continue_cleared_title" = "Continue Watching Cleared";
 "settings_continue_cleared_message" = "All Continue Watching entries were removed.";
+"settings_clear_bookmarks_title" = "Clear Bookmarks";
+"settings_clear_bookmarks_description" = "Remove all bookmarked shows from this device.";
+"settings_clear_bookmarks_confirmation" = "This will remove all your bookmarks. This cannot be undone.";
+"settings_clear_bookmarks_confirm" = "Clear Bookmarks";
+"settings_bookmarks_cleared_title" = "Bookmarks Cleared";
+"settings_bookmarks_cleared_message" = "All bookmarks were removed.";
 
 // Common
 "app_name" = "Zapp";
