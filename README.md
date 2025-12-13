@@ -39,8 +39,8 @@ So baust du die App selbst mit Xcode:
 1. Xcode installieren (einmalig über App Store)
 2. Repo klonen und in den Ordner wechseln:
 ```bash
-git clone https://github.com/YONN2222/zapp-iOS.git
-cd zapp-iOS
+git clone https://github.com/YONN2222/Zapp-iOS.git
+cd Zapp-iOS
 ```
 3. Projekt in Xcode öffnen
 ```bash
