@@ -22,17 +22,6 @@ enum MediathekChannel: String, CaseIterable, Codable {
     case wdr = "WDR"
 }
 
-struct MediathekShow: Codable {
-    let id: String?
-    let title: String?
-    let topic: String?
-    let channel: String?
-    let duration: Int?
-    let timestamp: TimeInterval?
-    let videoURL: String?
-    let thumbnails: [String: String]?
-}
-
 struct MediathekQueryRequest: Codable {
     var queries: [Query]
     var sortBy: String = "timestamp"
