@@ -134,6 +134,10 @@ struct MediathekAnswer: Codable {
 final class MediathekAPI {
     static let shared = MediathekAPI()
     
+    private enum MediathekAPIError: Error {
+        case requestFailed(statusCode: Int?)
+    }
+
     private let baseURL = URL(string: "https://mediathekviewweb.de/api/")!
     private let session: URLSession
     
@@ -152,7 +156,8 @@ final class MediathekAPI {
         
         let (data, response) = try await session.data(for: urlRequest)
         guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
-            throw ZappAPIError.requestFailed
+            let status = (response as? HTTPURLResponse)?.statusCode
+            throw MediathekAPIError.requestFailed(statusCode: status)
         }
         
         let decoder = JSONDecoder()
