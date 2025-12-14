@@ -143,18 +143,7 @@ final class MediathekSearchViewModel: ObservableObject {
             return
         }
 
-        let parameters = SearchParameters(
-            query: trimmed,
-            channels: selectedChannels,
-            minDurationMinutes: minDurationMinutes,
-            maxDurationMinutes: maxDurationMinutes
-        )
-
-        if trimmed == committedQuery {
-            startNewSearch(with: parameters)
-        } else {
-            committedQuery = trimmed
-        }
+        committedQuery = trimmed
 
         historyStore.record(trimmed)
         searchHistory = historyStore.loadHistory()
