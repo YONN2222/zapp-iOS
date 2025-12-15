@@ -1,5 +1,5 @@
 import Foundation
-import AVFoundation
+@preconcurrency import AVFoundation
 import CryptoKit
 import UIKit
 
@@ -219,7 +219,7 @@ private enum ThumbnailGenerator {
         }.value
     }
 
-    private static func generateCGImage(at time: CMTime, with generator: AVAssetImageGenerator) async throws -> CGImage {
+    @preconcurrency private static func generateCGImage(at time: CMTime, with generator: AVAssetImageGenerator) async throws -> CGImage {
         try await withTaskCancellationHandler(operation: {
             try await withCheckedThrowingContinuation { continuation in
                 generator.generateCGImageAsynchronously(for: time) { cgImage, _, error in

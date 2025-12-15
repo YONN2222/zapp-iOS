@@ -1,6 +1,8 @@
-Zapp.xcodeproj/project.xcworkspace/xcuserdata/yann.xcuserdatad/UserInterfaceState.xcuserstate
+Zapp.xcodeproj/project.xcworkspace/*
+/Users/yann/Documents/Coding/Zapp-iOS/Zapp.xcodeproj/project.xcworkspace/xcuserdata
 /.idea/
 /build/
 /android/
 .github/c*
 .DS_Store
+.vscode/
