@@ -12,7 +12,9 @@ struct PersonalView: View {
             Picker("", selection: $selectedTab) {
                 Text("personal_continue_watching").tag(0)
                 Text("personal_bookmarks").tag(1)
-                Text("personal_downloads").tag(2)
+                if !FeatureFlags.disableDownloads {
+                    Text("personal_downloads").tag(2)
+                }
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal, usesCenteredLayout ? 24 : 8)
@@ -27,8 +29,10 @@ struct PersonalView: View {
                 BookmarksListView()
                     .tag(1)
 
-                DownloadsListView()
-                    .tag(2)
+                if !FeatureFlags.disableDownloads {
+                    DownloadsListView()
+                        .tag(2)
+                }
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             .padding(.horizontal, usesCenteredLayout ? 12 : 0)
@@ -36,7 +40,11 @@ struct PersonalView: View {
         .frame(maxWidth: usesCenteredLayout ? 900 : .infinity)
         .frame(maxWidth: .infinity)
         .onReceive(NotificationCenter.default.publisher(for: .navigateToDownloadsTab)) { _ in
-            selectedTab = 2
+            if !FeatureFlags.disableDownloads {
+                selectedTab = 2
+            } else {
+                selectedTab = 1
+            }
         }
         .navigationTitle(Text("tab_personal"))
     }
