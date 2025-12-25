@@ -116,22 +116,24 @@ struct SettingsView: View {
 
     private var storageSection: some View {
         Section(String(localized: "settings_storage_section")) {
-            Toggle(isOn: $settings.downloadOverWifiOnly) {
-                SettingsRowLabel(
-                    title: String(localized: "settings_download_wifi_only_title"),
-                    description: String(localized: "settings_download_wifi_only_description")
-                )
-            }
+            if !FeatureFlags.disableDownloads {
+                Toggle(isOn: $settings.downloadOverWifiOnly) {
+                    SettingsRowLabel(
+                        title: String(localized: "settings_download_wifi_only_title"),
+                        description: String(localized: "settings_download_wifi_only_description")
+                    )
+                }
 
-            Button(role: .destructive) {
-                pendingDestructiveAction = .deleteDownloads(count: repo.downloads.count)
-            } label: {
-                SettingsRowLabel(
-                    title: String(localized: "settings_delete_downloads_title"),
-                    description: downloadDeletionDescription
-                )
+                Button(role: .destructive) {
+                    pendingDestructiveAction = .deleteDownloads(count: repo.downloads.count)
+                } label: {
+                    SettingsRowLabel(
+                        title: String(localized: "settings_delete_downloads_title"),
+                        description: downloadDeletionDescription
+                    )
+                }
+                .disabled(repo.downloads.isEmpty)
             }
-            .disabled(repo.downloads.isEmpty)
 
             Button(role: .destructive) {
                 pendingDestructiveAction = .clearCache
