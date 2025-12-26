@@ -115,54 +115,64 @@ struct OnboardingWelcomeView: View {
 }
 
 struct OnboardingFeaturesView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     var body: some View {
-        VStack(spacing: 32) {
-            Spacer()
-            
-            VStack(spacing: 16) {
-                Text(String(localized: "onboarding_features_title"))
-                    .font(.system(size: 34, weight: .bold))
-                
-                Text(String(localized: "onboarding_features_subtitle"))
-                    .font(.title3)
-                    .foregroundColor(.secondary)
+        GeometryReader { geometry in
+            ScrollView {
+                VStack(spacing: 32) {
+                    Spacer()
+                    
+                    VStack(spacing: 16) {
+                        Text(String(localized: "onboarding_features_title"))
+                            .font(.system(size: 34, weight: .bold))
+                        
+                        Text(String(localized: "onboarding_features_subtitle"))
+                            .font(.title3)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    VStack(spacing: 24) {
+                        FeatureRow(
+                            icon: "dot.radiowaves.left.and.right",
+                            title: String(localized: "onboarding_feature_live_title"),
+                            description: String(localized: "onboarding_feature_live_description")
+                        )
+                        
+                        FeatureRow(
+                            icon: "film",
+                            title: String(localized: "onboarding_feature_mediathek_title"),
+                            description: String(localized: "onboarding_feature_mediathek_description")
+                        )
+                        
+                        FeatureRow(
+                            icon: "play.circle",
+                            title: String(localized: "onboarding_feature_continue_title"),
+                            description: String(localized: "onboarding_feature_continue_description")
+                        )
+                        
+                        FeatureRow(
+                            icon: "bookmark",
+                            title: String(localized: "onboarding_feature_bookmarks_title"),
+                            description: String(localized: "onboarding_feature_bookmarks_description")
+                        )
+                        
+                        FeatureRow(
+                            icon: "chevron.left.forwardslash.chevron.right",
+                            title: String(localized: "onboarding_feature_opensource_title"),
+                            description: String(localized: "onboarding_feature_opensource_description")
+                        )
+                    }
+                    .frame(width: horizontalSizeClass == .regular ? 600 : nil)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.horizontal, horizontalSizeClass == .regular ? 0 : 32)
+                    .offset(x: horizontalSizeClass == .regular ? 150 : 0)
+                    
+                    Spacer()
+                }
+                .frame(minHeight: geometry.size.height)
             }
-            
-            VStack(alignment: .leading, spacing: 24) {
-                FeatureRow(
-                    icon: "dot.radiowaves.left.and.right",
-                    title: String(localized: "onboarding_feature_live_title"),
-                    description: String(localized: "onboarding_feature_live_description")
-                )
-                
-                FeatureRow(
-                    icon: "film",
-                    title: String(localized: "onboarding_feature_mediathek_title"),
-                    description: String(localized: "onboarding_feature_mediathek_description")
-                )
-                
-                FeatureRow(
-                    icon: "play.circle",
-                    title: String(localized: "onboarding_feature_continue_title"),
-                    description: String(localized: "onboarding_feature_continue_description")
-                )
-                
-                FeatureRow(
-                    icon: "bookmark",
-                    title: String(localized: "onboarding_feature_bookmarks_title"),
-                    description: String(localized: "onboarding_feature_bookmarks_description")
-                )
-                
-                FeatureRow(
-                    icon: "chevron.left.forwardslash.chevron.right",
-                    title: String(localized: "onboarding_feature_opensource_title"),
-                    description: String(localized: "onboarding_feature_opensource_description")
-                )
-            }
-            
-            Spacer()
+            .scrollDisabled(true)
         }
-        .padding(.horizontal, 32)
     }
 }
 
@@ -186,11 +196,11 @@ struct FeatureRow: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
-            
-            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
-}
+
 
 struct OnboardingGeoRestrictionView: View {
     var body: some View {
