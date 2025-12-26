@@ -36,13 +36,7 @@ struct ChannelListView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    Button {
-                        NotificationCenter.default.post(name: .navigateToDownloadsTab, object: nil)
-                    } label: {
-                        Label("channel_menu_open_downloads", systemImage: "arrow.down.circle")
-                    }
 
-                        .listRowInsets(EdgeInsets(top: 10, leading: 28, bottom: 10, trailing: 20))
                     Button {
                         activeOverflowSheet = .reorder
                     } label: {

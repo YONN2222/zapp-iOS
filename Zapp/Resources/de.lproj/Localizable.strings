@@ -13,7 +13,7 @@
 "channel_refresh" = "Aktualisieren";
 "channel_no_connection_title" = "Keine Verbindung";
 "channel_no_connection_message" = "Für Live-TV brauchst du eine Internetverbindung.";
-"channel_menu_open_downloads" = "Downloads öffnen";
+
 "channel_menu_reorder" = "Sender neu anordnen";
 "channel_overflow_accessibility" = "Weitere Aktionen";
 "channel_order_footer" = "Ziehe die Griffe rechts, um Sender zu verschieben. Du kannst jeden Namen anpassen.";

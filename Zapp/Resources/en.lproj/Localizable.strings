@@ -13,7 +13,7 @@
 "channel_refresh" = "Refresh";
 "channel_no_connection_title" = "No Connection";
 "channel_no_connection_message" = "Live TV requires an internet connection.";
-"channel_menu_open_downloads" = "Open Downloads";
+
 "channel_menu_reorder" = "Reorder Channels";
 "channel_overflow_accessibility" = "More actions";
 "channel_order_footer" = "Drag the handles on the right to reorder channels. You can customize every name.";
