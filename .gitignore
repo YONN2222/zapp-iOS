@@ -5,3 +5,4 @@ Zapp.xcodeproj/project.xcworkspace/*
 .github/c*
 .DS_Store
 .vscode/
+.build/
