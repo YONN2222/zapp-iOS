@@ -17,6 +17,7 @@ final class AppSettings: ObservableObject {
     private let colorSchemePreferenceKey = "colorSchemePreference"
     private let streamHostKey = "streamHost"
     private let hasCompletedOnboardingKey = "hasCompletedOnboarding"
+    private let showProgressInBookmarksKey = "showProgressInBookmarks"
     
     @Published var streamQualityWifi: MediathekShow.Quality {
         didSet { defaults.set(streamQualityWifi.rawValue, forKey: streamQualityWifiKey) }
@@ -48,6 +49,10 @@ final class AppSettings: ObservableObject {
     @Published var hasCompletedOnboarding: Bool {
         didSet { defaults.set(hasCompletedOnboarding, forKey: hasCompletedOnboardingKey) }
     }
+
+    @Published var showProgressInBookmarks: Bool {
+        didSet { defaults.set(showProgressInBookmarks, forKey: showProgressInBookmarksKey) }
+    }
     
     private init() {
         self.initialSystemInterfaceStyle = UIScreen.main.traitCollection.userInterfaceStyle
@@ -58,6 +63,11 @@ final class AppSettings: ObservableObject {
         self.colorSchemePreference = ColorSchemePreference(rawValue: defaults.string(forKey: colorSchemePreferenceKey) ?? ColorSchemePreference.system.rawValue) ?? .system
         self.streamHost = defaults.string(forKey: streamHostKey) ?? ""
         self.hasCompletedOnboarding = defaults.bool(forKey: hasCompletedOnboardingKey)
+        if defaults.object(forKey: showProgressInBookmarksKey) == nil {
+            self.showProgressInBookmarks = true
+        } else {
+            self.showProgressInBookmarks = defaults.bool(forKey: showProgressInBookmarksKey)
+        }
         applyColorSchemePreference()
     }
     

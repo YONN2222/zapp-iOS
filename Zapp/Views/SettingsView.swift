@@ -196,6 +196,12 @@ struct SettingsView: View {
                     }
                     .accessibilityIdentifier("settings-mediathek-link")
                 }
+                Toggle(isOn: $settings.showProgressInBookmarks) {
+                    SettingsRowLabel(
+                        title: String(localized: "settings_bookmarks_show_progress_title"),
+                        description: String(localized: "settings_bookmarks_show_progress_description")
+                    )
+                }
             }
             .padding(.vertical, 2)
         }

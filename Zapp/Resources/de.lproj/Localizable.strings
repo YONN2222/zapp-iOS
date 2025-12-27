@@ -214,6 +214,9 @@
 "settings_bookmarks_cleared_title" = "Lesezeichen gelöscht";
 "settings_bookmarks_cleared_message" = "Alle Lesezeichen wurden entfernt.";
 
+"settings_bookmarks_show_progress_title" = "Fortschritt in Lesezeichen anzeigen";
+"settings_bookmarks_show_progress_description" = "Wenn aktiviert, zeigen Lesezeichen einen Fortschrittsbalken, der anzeigt, wo du aufgehört hast.";
+
 // Common
 "app_name" = "Zapp";
 "close" = "Schließen";

@@ -214,6 +214,9 @@
 "settings_bookmarks_cleared_title" = "Bookmarks Cleared";
 "settings_bookmarks_cleared_message" = "All bookmarks were removed.";
 
+"settings_bookmarks_show_progress_title" = "Show progress in bookmarks";
+"settings_bookmarks_show_progress_description" = "When enabled, bookmarks show a progress bar indicating where you left off.";
+
 // Common
 "app_name" = "Zapp";
 "close" = "Close";

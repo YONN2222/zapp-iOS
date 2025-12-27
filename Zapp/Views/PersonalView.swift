@@ -4,6 +4,7 @@ import Foundation
 struct PersonalView: View {
     @EnvironmentObject var repo: MediathekRepository
     @EnvironmentObject var networkMonitor: NetworkMonitor
+    @ObservedObject private var settings = AppSettings.shared
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var selectedTab = 0
     
@@ -125,6 +126,7 @@ struct ContinueWatchingListView: View {
 
 struct BookmarksListView: View {
     @EnvironmentObject var repo: MediathekRepository
+    @ObservedObject private var settings = AppSettings.shared
     private let gridColumns = [GridItem(.adaptive(minimum: 320, maximum: 420), spacing: 16)]
     
     var body: some View {
@@ -140,6 +142,7 @@ struct BookmarksListView: View {
                     ForEach(repo.bookmarks) { persisted in
                         PersistedShowCard(
                             persisted: persisted,
+                            showProgress: settings.showProgressInBookmarks,
                             allowBookmarkRemoval: true
                         )
                         .frame(maxWidth: .infinity)
